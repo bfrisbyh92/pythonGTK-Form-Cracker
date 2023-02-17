@@ -7,4 +7,8 @@ Just experimenting with a Python GTK GUI, that's going to take in a few paramate
 - Figure out how to style GTK apps
 - Figure out how to size, scale, and just generally develope GTK apps, as this is my first time
 
+
+This is just my start. 2 days in with this build, so be nice.
+
+![PythonGTK](./images/pythonGTK.png)
 ![sniffNetworksNotDrugs](./images/sniffnetworksnotdrugs.webp)
