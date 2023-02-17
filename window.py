@@ -1,9 +1,11 @@
 import gi
 import subprocess
 from gi.repository import Gtk
+
+
 class MyWindow(Gtk.Window):
     def __init__(self):
-        Gtk.Window.__init__(self, title="File Selector and Input Demo")
+        Gtk.Window.__init__(self, title="Python-Hydra Password Cracker")
         self.set_border_width(10)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -43,8 +45,8 @@ class MyWindow(Gtk.Window):
 
         input3_entry = Gtk.Entry()
         vbox.pack_start(input3_entry, False, False, 0)
-        
-         # Input 4
+
+        # Input 4
         input4_label = Gtk.Label(label="Protocol:")
         vbox.pack_start(input4_label, False, False, 0)
 
@@ -53,7 +55,8 @@ class MyWindow(Gtk.Window):
 
         # Submit Button
         submit_button = Gtk.Button(label="Submit")
-        submit_button.connect("clicked", self.on_submit_clicked, file_selector1, file_selector2, input1_entry, input2_entry, input3_entry, input4_entry)
+        submit_button.connect("clicked", self.on_submit_clicked, file_selector1,
+                              file_selector2, input1_entry, input2_entry, input3_entry, input4_entry)
 
         vbox.pack_start(submit_button, False, False, 0)
 
@@ -61,14 +64,15 @@ class MyWindow(Gtk.Window):
         self.display_label = Gtk.Label(label="")
         vbox.pack_start(self.display_label, False, False, 0)
 
-    def on_submit_clicked(self, button, file_selector1, file_selector2, input1_entry, input2_entry, input3_entry,input4_entry):
-        selected_files = [file_selector1.get_filename(), file_selector2.get_filename()]
-        input1 = input1_entry.get_text()
-        input2 = input2_entry.get_text()
-        input3 = input3_entry.get_text()
-        input4 = input4_entry.get_text()
+    def on_submit_clicked(self, button, file_selector1, file_selector2, input1_entry, input2_entry, input3_entry, input4_entry):
+        selected_files = [
+            file_selector1.get_filename(), file_selector2.get_filename()]
+        targetip = input1_entry.get_text()
+        path = input2_entry.get_text()
+        regexstring = input3_entry.get_text()
+        protocol = input4_entry.get_text()
 
-        selected_inputs = f"Selected files: {selected_files}\nInput 1: {input1}\nInput 2: {input2}\nInput 3: {input3}\nInput 4: {input4}"
+        selected_inputs = f"Selected files: {selected_files}\nTarget IP: {targetip}\nPath: {path}\nRegexString: {regexstring}\nProtocol: {protocol}"
 
         self.display_label.set_text(selected_inputs)
 
