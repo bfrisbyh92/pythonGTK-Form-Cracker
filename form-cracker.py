@@ -5,28 +5,29 @@ from gi.repository import Gtk
 # By Brendan Frisby
 # https://brendanfrisby.live
 
-
 class MyWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Multi-Protocol Password Cracker")
         self.set_border_width(10)
+        self.set_default_size(500, 300)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
         self.add(vbox)
 
         # File Selector 1
-        file_selector1_label = Gtk.Label(label="Password List:")
+        file_selector1_label = Gtk.Label(label="User List:")
         vbox.pack_start(file_selector1_label, False, False, 0)
 
         file_selector1 = Gtk.FileChooserButton(title="Select a file")
         vbox.pack_start(file_selector1, False, False, 0)
-
+        
         # File Selector 2
-        file_selector2_label = Gtk.Label(label="User List:")
+        file_selector2_label = Gtk.Label(label="Password List:")
         vbox.pack_start(file_selector2_label, False, False, 0)
 
         file_selector2 = Gtk.FileChooserButton(title="Select a file")
         vbox.pack_start(file_selector2, False, False, 0)
+
 
         # Input 1
         input1_label = Gtk.Label(label="Target's IP:")
