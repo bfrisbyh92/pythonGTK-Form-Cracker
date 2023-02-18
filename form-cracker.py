@@ -2,10 +2,13 @@ import gi
 import subprocess
 from gi.repository import Gtk
 
+# By Brendan Frisby
+# https://brendanfrisby.live
+
 
 class MyWindow(Gtk.Window):
     def __init__(self):
-        Gtk.Window.__init__(self, title="Python-Hydra Password Cracker")
+        Gtk.Window.__init__(self, title="Multi-Protocol Password Cracker")
         self.set_border_width(10)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
@@ -64,6 +67,16 @@ class MyWindow(Gtk.Window):
         self.display_label = Gtk.Label(label="")
         vbox.pack_start(self.display_label, False, False, 0)
 
+        # Display area for showing the selected inputs
+        self.display_label = Gtk.Label(label="Inputs Selected")
+        vbox.pack_start(self.display_label, False, False, 0)
+
+ # Scrolled Window to display command output
+        self.output_scroll = Gtk.ScrolledWindow()
+        self.output_scroll.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+        vbox.pack_start(self.output_scroll, True, True, 0)
+
     def on_submit_clicked(self, button, file_selector1, file_selector2, input1_entry, input2_entry, input3_entry, input4_entry):
         selected_files = [
             file_selector1.get_filename(), file_selector2.get_filename()]
@@ -77,6 +90,44 @@ class MyWindow(Gtk.Window):
         command = f"hydra -L {selected_files[1]} -P {selected_files[0]} -e nsr -v -F {protocol}://{targetip}/{path}:F={regexstring}"
         result = subprocess.run(command, shell=True,
                                 capture_output=True, text=True)
+
+        # Run the command and capture the output
+        result = subprocess.run(command, shell=True,
+                                capture_output=True, text=True)
+
+        # Display the command output in the console
+        print(result.stdout)
+        print(result.stderr)
+
+        # Create a new window to display the output
+        output_window = Gtk.Window(title="Hydra Output")
+        output_window.set_default_size(500, 300)
+
+        # Create a scrolled window to hold the output text
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_policy(
+            Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
+
+        # Create a text view to display the output
+        output_view = Gtk.TextView()
+        output_view.set_editable(False)
+        output_view.set_cursor_visible(False)
+        output_view.set_wrap_mode(Gtk.WrapMode.WORD_CHAR)
+
+        # Create a buffer to hold the output text
+        buffer = output_view.get_buffer()
+
+        # Insert the output text into the buffer
+        buffer.insert_at_cursor(result.stdout)
+
+        # Add the text view to the scrolled window
+        scrolled_window.add(output_view)
+
+        # Add the scrolled window to the output window
+        output_window.add(scrolled_window)
+
+        # Show the output window
+        output_window.show_all()
 
  # Display the command output in the console
         print(result.stdout)
